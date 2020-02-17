@@ -1,0 +1,84 @@
+
+   
+
+<div class="row">
+<br>
+
+
+  <div class="col-md-2 order-md-1"></div>
+   <div class="col-md-8 order-md-1">
+  
+     <form class="needs-validation" novalidate="">
+       <div class="row">
+         <div class="col-md-6 mb-3">
+           <label for="firstName">First name</label>
+           <input type="text" class="form-control" id="firstName" [(ngModel)]="selectedPerson.firstName" placeholder="" name="first" required>
+           <div class="invalid-feedback">
+             Valid first name is required.
+           </div>
+         </div>
+         <div class="col-md-6 mb-3">
+           <label for="lastName">Last name</label>
+           <input type="text" class="form-control" name="lastName" [(ngModel)]="selectedPerson.lastName" placeholder="" value="" required>
+           <div class="invalid-feedback">
+             Valid last name is required.
+           </div>
+         </div>
+       </div>
+ 
+      
+ 
+ 
+       <div class="row">
+         <div class="col-md-6 mb-3">
+           <label for="age">Age</label>
+           
+         <input type="number" class="form-control" [(ngModel)]="selectedPerson.age" id="age" name="age">
+           <div class="invalid-feedback">
+             Please select a valid age.
+           </div>
+         </div>
+         <div class="col-md-6 mb-3">
+           <label for="state">Favourite Color</label>
+          
+         <input type="text" class="form-control" name="favouriteColor" [(ngModel)]="selectedPerson.age" placeholder="Favourite Color">
+           <div class="invalid-feedback">
+             Please provide a valid Favourite Color.
+           </div>
+         </div>
+     
+       </div>
+     
+       <div class="row">
+       <div class="col-md-6 mb-3">
+           <label for="country">Hobbbies : </label> 
+         
+           
+  <br>
+           <select [(ngModel)]="selectedhobby" name="hobbyies" class="custom-select d-block w-100"  id="hobbies" required>
+             <option *ngFor="let hobby of hobbies; let i=index" [value]="i" > {{hobby.hobby}}</option>
+           </select>  
+           <br>
+           <div class="col-md-5 mb-3">
+           <button class="btn btn-primary "(click)="addHobby(hobby)" >Add Hobby</button>
+           </div>
+       </div>
+
+       <div class="col-md-6 mb-3">
+        <ng-container *ngFor="let item of selectedHobbies ; let i=index "> 
+
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{item.hobby}}</strong> 
+            <button type="button" class="close" (click)="remove(i)" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+
+         </ng-container>
+       </div>
+      </div>
+       <hr class="mb-4">
+       <button class="btn btn-primary btn-lg btn-block" (click)="save()" type="submit">Save</button>
+     </form>
+   </div>
+ </div>
