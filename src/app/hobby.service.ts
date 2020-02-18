@@ -3,6 +3,7 @@ import { GlobalService } from './global.service';
 import { Http } from '@angular/http/src/http';
 import { Headers } from '@angular/http/src/headers';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class HobbyService {
@@ -11,9 +12,9 @@ export class HobbyService {
   };
   constructor(private http: Http, private globalService: GlobalService) { }
 
-  private getAllhobbyUrl = this.globalService.common + '/hobby/all';
+  private getAllhobbyUrl = this.globalService.common + '/hobby/findAll';
 
-  getAllhobbys() {
+  getAllhobbys()  : Observable<any> {
     return this.http.get(this.getAllhobbyUrl, this.httpOptions)
       .pipe(
         map(res => res),

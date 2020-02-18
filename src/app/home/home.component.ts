@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Person } from 'app/models/person.model';
 import { Hobby } from 'app/models/hobby.model';
+import { PersonService } from 'app/person.service';
+import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-home',
@@ -9,42 +11,30 @@ import { Hobby } from 'app/models/hobby.model';
 })
 export class HomeComponent implements OnInit {
   selectedPerson;
-  name : string;
+  name: string;
   details = false;
   persons = [];
   allpersons = [];
-  constructor() { }
+  constructor(private personService: PersonService) { }
 
   ngOnInit() {
-    const person = new Person();
-    person.firstName = 'ANUSH';
-    person.lastName = 'JAin';
-    person.age = 20;
-    person.favouriteColor = 'red';
-    person.personHobbies = [];
-    const hobby = [];
-    hobby[0] = new Hobby();
-    hobby[0].hobby = 'CRicket';
-    person.personHobbies = hobby;
-    this.persons.push(person);
-    this.persons.push(person);
-this.allpersons = this.persons;
+    this.getall()
+  }
+
+  getall() {
+    this.personService.getAllPersons().subscribe(res => {
+      let data = JSON.parse(res._body)
+      this.allpersons = data.data;
+      this.persons = data.data
 
 
+    })
   }
-  search(){
-  const temp = [];
-  this.allpersons.forEach(e => {
-    if (e.search(this.name)){
-     temp.push(e);
-    }
-  });
-  this.persons = temp;
-  }
-  back(){
+  back() {
     this.details = false;
+    this.getall()
   }
-  addperson(){
+  addperson() {
     this.selectedPerson = new Person();
     this.details = true;
   }
@@ -53,5 +43,11 @@ this.allpersons = this.persons;
       this.selectedPerson = person;
       this.details = true;
     }
+  }
+  delete(person) {
+    this.personService.deletePerson(person).subscribe(res => {
+      alert("Deleted")
+      this.getall()
+    })
   }
 }

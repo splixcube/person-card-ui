@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import {Response} from '@angular/http'
 
 @Injectable()
 export class GlobalService {
-   common = 'http://localhost:8080';
+   common = 'http://localhost:8085';
 role ;
 component :string = 'login';
 key = "ISCLLGNUSR";
@@ -35,10 +36,11 @@ localStorage.removeItem(this.key+"_user");
 sessionStorage.removeItem(this.key);
 }
 
-public handleError (error : any) {
+public handleError (error : Response | any) {
 // In a real world app, you might use a remote logging infrastructure
-let errMsg: string;
-if (error) {
+let errMsg: string; 
+
+if (error instanceof Response) {
 var body : any  = error.json() || '';
 var err  = body.error || JSON.stringify(body);
 errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
@@ -46,7 +48,7 @@ errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
 errMsg = error.message ? error.message : error.toString();
 }
 console.error(errMsg);
-return Observable.throw(errMsg);
+return errMsg;
 }
 
 }

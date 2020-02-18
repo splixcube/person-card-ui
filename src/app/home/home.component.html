@@ -1,9 +1,6 @@
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand"> Person Details</a>
-  <form *ngIf="!details" class="form-inline">
-    <input class="form-control mr-sm-2"  name="seacrh" [(ngModel)]="name" placeholder="Search first Name" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" (click)="search()" type="submit">Search</button>
-  </form>
+ 
 <ng-container>
    <button style="float: right;" *ngIf="!details" class="btn btn-primary" (click)="addperson()" >Add Person</button>
   <button style="float: right;"  *ngIf="details" class="btn btn-primary" (click)="back()" >Back</button>
@@ -28,10 +25,12 @@
         <h6 class="card-subtitle mb-2 text-muted"><b>AGE :</b> {{person.age}} <br>
         <b>Favourite Color : {{person.favouriteColor}} </b>
         </h6>
-        <p class="card-text"><b>Hobbies :</b> <ng-container *ngFor="let item of person.personHobbies"> {{item.hobby}} ,</ng-container>
+        <p class="card-text"><b>Hobbies :</b>  {{person.hobby}} 
         </p>
         
         <a (click)="detailsforPeson(person)" style="color: rgb(0, 130, 236);" class="card-link">Edit Details</a>
+        <a (click)="delete(person)" style="color: red;" class="card-link">Delete</a>
+     
       </div>
     </div>
   </div>

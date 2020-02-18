@@ -6,5 +6,5 @@ export class Person {
     lastName: string;
     age: number;
     favouriteColor: string;
-    personHobbies: Hobby[];
+    hobbby: Hobby[];
 }

@@ -3,6 +3,7 @@ import { GlobalService } from './global.service';
 import { Http } from '@angular/http/src/http';
 import { Headers  } from '@angular/http/src/headers';
 import { catchError, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class PersonService {
@@ -12,16 +13,16 @@ export class PersonService {
 
   constructor(private http: Http, private globalService : GlobalService) { }
 
-  private getAllPersonUrl = this.globalService.common + '/person/all';
-  private savePersonUrl = this.globalService.common + 'person/save';
-  private deleteUrl = this.globalService.common + 'person/delete';
+  private getAllPersonUrl = this.globalService.common + '/person/findAll';
+  private savePersonUrl = this.globalService.common + '/person/save';
+  private deleteUrl = this.globalService.common + '/person/deleteById/';
 
-  getAllPersons() {
+  getAllPersons() : Observable<any>  {
  return this.http.get(this.getAllPersonUrl, this.httpOptions)
-     .pipe(
-        map(res => res),
-        catchError(this.globalService.handleError)
-    );
+.pipe(
+       map(res => res),
+       catchError(this.globalService.handleError)
+   );
   }
 
   savePerson(person) {
@@ -32,8 +33,8 @@ export class PersonService {
    );
 
   }
-  deletePerson() {
-    return this.http.delete(this.deleteUrl , this.httpOptions)
+  deletePerson(person) {
+    return this.http.get(this.deleteUrl+person.id.toString(), this.httpOptions)
      .pipe(
         map(res => res),
         catchError(this.globalService.handleError)
